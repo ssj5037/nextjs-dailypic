@@ -19,7 +19,7 @@ export default function NavLink({
   return (
     <Link
       href={`${path}`}
-      className={`flex items-center gap-3 p-2 rounded-md
+      className={`flex items-center justify-end gap-3 p-2 rounded-md
       hover:bg-orange-50 group transition-all ${
         pathname === path && "text-orange-500 font-semibold"
       }`}

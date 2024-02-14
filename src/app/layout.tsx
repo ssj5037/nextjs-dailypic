@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/component/Header";
+import AuthContext from "@/context/AuthContext";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -18,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={openSans.className}>
       <body className="flex flex-col md:flex-row">
-        <Header />
-        <main>{children}</main>
+        <AuthContext>
+          <Header />
+          <main className="grow">{children}</main>
+        </AuthContext>
       </body>
     </html>
   );

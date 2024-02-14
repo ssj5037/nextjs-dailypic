@@ -34,9 +34,9 @@ const menus: NavMenu[] = [
 
 export default function Header() {
   return (
-    <header className="flex flex-row items-center w-full gap-8 px-4 py-3 border-b md:flex-col md:w-20 lg:w-60 md:py-10 md:border-r md:items-start">
+    <header className="flex flex-row items-center w-full gap-8 px-4 py-3 border-b md:flex-col md:w-20 lg:w-60 md:py-10 md:border-r md:border-b-0 md:items-start">
       {/* logo */}
-      <h1 className="w-full p-2 font-semibold grow md:grow-0 md:h-10">
+      <h1 className="w-full p-2 font-semibold md:h-10">
         <Link href={"/"} className="hidden text-2xl lg:block">
           Dailypic
         </Link>
@@ -45,7 +45,7 @@ export default function Header() {
         </Link>
       </h1>
       {/* nav */}
-      <nav className="flex flex-row w-full gap-5 md:flex-col md:grow">
+      <nav className="flex flex-row w-full gap-5 justify-end md:justify-start items-start md:grow md:flex-col">
         {menus.map((menu) => (
           <NavLink key={menu.path} menu={menu} />
         ))}
