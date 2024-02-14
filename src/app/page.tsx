@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export default function Home() {
-  return <h1>DailyPic</h1>;
+  return <h2>Home</h2>;
 }
