@@ -1,6 +1,6 @@
 import Link from "next/link";
 import NavLink, { NavMenu } from "./NavLink";
-import SignIn from "./SignIn";
+import SignInButton from "./SignInButton";
 import {
   HomeFillIcon,
   HomeIcon,
@@ -52,7 +52,7 @@ export default function Header() {
       </nav>
       {/* user info */}
       <div className="flex flex-row md:flex-col md:w-full">
-        <SignIn />
+        <SignInButton />
       </div>
     </header>
   );
