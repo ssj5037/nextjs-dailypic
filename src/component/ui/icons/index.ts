@@ -6,3 +6,4 @@ export { default as NewFillIcon } from "./NewFillIcon";
 export { default as NewIcon } from "./NewIcon";
 export { default as LogoIcon } from "./LogoIcon";
 export { default as SignInIcon } from "./SignInIcon";
+export { default as SignOutIcon } from "./SignOutIcon";
