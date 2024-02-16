@@ -27,7 +27,7 @@ export default function NavLink({
       <div className="text-3xl transition-transform group-hover:scale-105">
         {pathname === path ? activeIcon : inactiveIcon}
       </div>
-      <span className="hidden scale-100 lg:block">{title}</span>
+      <span className="hidden scale-100 xl:block">{title}</span>
     </Link>
   );
 }

@@ -35,13 +35,13 @@ const menus: NavMenu[] = [
 
 export default function Header() {
   return (
-    <header className="flex flex-row items-center w-full gap-8 px-4 py-3 border-b md:flex-col md:w-20 lg:w-60 md:py-10 md:border-r md:border-b-0 md:items-start">
+    <header className="flex flex-row items-center w-full gap-8 px-4 py-3 border-b md:flex-col md:w-20 xl:w-60 md:py-10 md:border-r md:border-b-0 md:items-start">
       {/* logo */}
       <h1 className="p-2 font-semibold md:w-full md:h-10">
-        <Link href={"/"} className="hidden text-2xl lg:block">
+        <Link href={"/"} className="hidden text-2xl xl:block">
           Dailypic
         </Link>
-        <Link href={"/"} className="block text-3xl lg:hidden">
+        <Link href={"/"} className="block text-3xl xl:hidden">
           <LogoIcon />
         </Link>
       </h1>
@@ -52,8 +52,13 @@ export default function Header() {
         ))}
       </nav>
       {/* user info */}
-      <div className="flex flex-row items-center justify-center gap-5 lg:w-full md:flex-col shrink-0 ">
-        <Avatar />
+      <div className="flex flex-row items-center justify-center gap-5 xl:w-full md:flex-col">
+        <div className="hidden w-full xl:flex">
+          <Avatar highlight showName />
+        </div>
+        <div className="flex xl:hidden shrink-0">
+          <Avatar highlight />
+        </div>
         <SignInButton />
       </div>
     </header>

@@ -16,7 +16,7 @@ export default function SignIn() {
       >
         {session ? (
           <>
-            <span className="hidden text-sm lg:block">Sign Out</span>
+            <span className="hidden text-sm xl:block">Sign Out</span>
             <span className="text-xl">
               <SignOutIcon />
             </span>
@@ -26,7 +26,7 @@ export default function SignIn() {
             <span className="text-xl">
               <SignInIcon />
             </span>
-            <span className="hidden text-sm lg:block">Sign In</span>
+            <span className="hidden text-sm xl:block">Sign In</span>
           </>
         )}
       </DPButton>

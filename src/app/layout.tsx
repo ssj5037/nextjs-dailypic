@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className="flex flex-col md:flex-row">
         <AuthContext>
           <Header />
-          <main className="grow">{children}</main>
+          <main className="flex justify-center grow my-7">{children}</main>
         </AuthContext>
       </body>
     </html>
