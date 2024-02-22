@@ -1,4 +1,6 @@
-import { client } from "../../sanity/lib/client";
+import { getServerSession } from 'next-auth';
+import { client } from '../../sanity/lib/client';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 type OAuthUser = {
   id: string;
@@ -18,7 +20,7 @@ export async function createUser({
   return await client
     .createIfNotExists({
       _id: id,
-      _type: "user",
+      _type: 'user',
       username,
       email,
       name,
@@ -28,6 +30,19 @@ export async function createUser({
       bookmarks: [],
     })
     .then((res) => {
-      console.log("Bike was created (or was already present)");
+      console.log('Bike was created (or was already present)');
     });
+}
+
+export async function getFollowingUser() {
+  const session = await getServerSession(authOptions);
+  const user = session?.user;
+  console.log(user);
+  if (user) {
+    return await client.fetch(
+      `*[_type == "user" && email == "${user.email}"].following`
+    );
+  } else {
+    console.log('세션이 없습니다.');
+  }
 }

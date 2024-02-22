@@ -1,62 +1,62 @@
-import { defineField, defineType } from "sanity";
+import { defineField, defineType } from 'sanity';
 
 export default defineType({
-  title: "User",
-  name: "user",
-  type: "document",
+  title: 'User',
+  name: 'user',
+  type: 'document',
   fields: [
     defineField({
-      name: "username",
-      title: "Username",
-      type: "string",
+      name: 'username',
+      title: 'Username',
+      type: 'string',
     }),
     defineField({
-      name: "name",
-      title: "Name",
-      type: "string",
+      name: 'name',
+      title: 'Name',
+      type: 'string',
     }),
     defineField({
-      name: "email",
-      title: "Email",
-      type: "string",
+      name: 'email',
+      title: 'Email',
+      type: 'string',
     }),
     defineField({
-      name: "image",
-      title: "Image",
-      type: "string",
+      name: 'image',
+      title: 'Image',
+      type: 'string',
     }),
     defineField({
-      name: "following",
-      title: "Following",
-      type: "array",
+      name: 'following',
+      title: 'Following',
+      type: 'array',
       of: [
         {
-          type: "reference",
-          to: { type: "user" },
+          type: 'reference',
+          to: { type: 'user' },
         },
       ],
       validation: (rule) => rule.unique(),
     }),
     defineField({
-      name: "followers",
-      title: "Followers",
-      type: "array",
+      name: 'followers',
+      title: 'Followers',
+      type: 'array',
       of: [
         {
-          type: "reference",
-          to: { type: "user" },
+          type: 'reference',
+          to: { type: 'user' },
         },
       ],
       validation: (rule) => rule.unique(),
     }),
     defineField({
-      name: "bookmarks",
-      title: "Bookmarks",
-      type: "array",
+      name: 'bookmarks',
+      title: 'Bookmarks',
+      type: 'array',
       of: [
         {
-          type: "reference",
-          to: { type: "post" },
+          type: 'reference',
+          to: { type: 'post' },
         },
       ],
       validation: (rule) => rule.unique(),
@@ -64,11 +64,11 @@ export default defineType({
   ],
   preview: {
     select: {
-      username: "username",
-      name: "name",
-      email: "email",
-      following: "following",
-      followers: "followers",
+      username: 'username',
+      name: 'name',
+      email: 'email',
+      following: 'following',
+      followers: 'followers',
     },
     prepare(selection) {
       const { username, name, email, following, followers } = selection;
