@@ -23,15 +23,22 @@ export const authOptions: NextAuthOptions = {
       createUser({ id, name, email, image, username: email.split('@')[0] });
       return true;
     },
-    async session({ session }) {
+    async session({ session, token }) {
       const user = session?.user;
       if (user) {
         session.user = {
           ...user,
           username: user.email?.split('@')[0] || '',
+          id: token.sub || '',
         };
       }
       return session;
+    },
+    async jwt({ user, token }) {
+      if (user) {
+        token.uid = user.id;
+      }
+      return token;
     },
   },
 };
