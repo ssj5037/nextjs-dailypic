@@ -5,14 +5,14 @@ import Avatar from './Avatar';
 type Props = {
   user: User;
 };
-export default function SideBar({ user }: Props) {
+export default function SideBar({ user: { image, username, name } }: Props) {
   return (
     <>
-      <Link href={`/${user.username}`} className='flex gap-3 shrink-0'>
-        <Avatar size='large' user={user} />
+      <Link href={`/${username}`} className='flex gap-3 shrink-0'>
+        <Avatar size='large' image={image} />
         <div className='flex flex-col'>
-          <span className='font-semibold text-md'>{user.username}</span>
-          <span className='text-gray text-sm'>{user.name}</span>
+          <span className='font-semibold text-md'>{username}</span>
+          <span className='text-gray text-sm'>{name}</span>
         </div>
       </Link>
       <div className='my-7'>

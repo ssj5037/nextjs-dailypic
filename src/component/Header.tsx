@@ -64,7 +64,7 @@ export default async function Header() {
       {/* user info */}
       <div className='flex flex-row justify-center gap-8 xl:w-full md:flex-col'>
         <Link href={`/${user.username}`} className='flex gap-2 shrink-0'>
-          <Avatar highlight user={user} />
+          <Avatar highlight image={user.image} />
           <div className='xl:flex flex-col hidden'>
             <span className='font-semibold text-sm'>{user.username}</span>
             <span className='text-gray text-xs'>{user.name}</span>
