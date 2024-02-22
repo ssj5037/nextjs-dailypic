@@ -1,6 +1,4 @@
-import { getServerSession } from 'next-auth';
 import { client } from '../../sanity/lib/client';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 type OAuthUser = {
   id: string;
@@ -34,15 +32,14 @@ export async function createUser({
     });
 }
 
-export async function getFollowingUser() {
-  const session = await getServerSession(authOptions);
-  const user = session?.user;
-  console.log(user);
-  if (user) {
-    return await client.fetch(
-      `*[_type == "user" && email == "${user.email}"].following`
-    );
-  } else {
-    console.log('세션이 없습니다.');
-  }
+export async function getUser(id: string) {
+  return client.fetch(
+    `*[_type == "user" && _id == "${id}"]{
+        ...,
+        "id": _id,
+        following[]->{ username, image },
+        followers[]->{ username, image },
+        "bookmarks":bookmarks[]->_id
+      }[0]`
+  );
 }

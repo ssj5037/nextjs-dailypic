@@ -15,7 +15,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <section className='max-w-2xl w-[42rem]'>
+      <section className='max-w-2xl md:w-[42rem] w-full'>
         <FollowingBar />
         <PostList />
       </section>
