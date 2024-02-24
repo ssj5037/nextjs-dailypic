@@ -1,6 +1,6 @@
 import { User } from '@/models/user';
 import Link from 'next/link';
-import Avatar from './Avatar';
+import Avatar from '@/component/ui/Avatar';
 
 type Props = {
   user: User;

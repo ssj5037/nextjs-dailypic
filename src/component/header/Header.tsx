@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import NavLink, { NavMenu } from './NavLink';
 import SignInButton from './SignInButton';
-import Avatar from './Avatar';
+import Avatar from '@/component/ui/Avatar';
 import {
   HomeFillIcon,
   HomeIcon,
@@ -10,7 +10,7 @@ import {
   NewIcon,
   SearchFillIcon,
   SearchIcon,
-} from './ui/icons';
+} from '@/component/ui/icons';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';

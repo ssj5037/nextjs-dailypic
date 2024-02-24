@@ -4,8 +4,8 @@ import { DetailUser } from '@/models/user';
 import Link from 'next/link';
 import { SyncLoader } from 'react-spinners';
 import useSWR from 'swr';
-import Avatar from './Avatar';
-import ScrollableBar from './ui/ScrollableBar';
+import ScrollableBar from '@/component/ui/ScrollableBar';
+import Avatar from '@/component/ui/Avatar';
 
 export default function FollowingBar() {
   // 1. 클라이언트 컴포넌트에서 백엔드에게 api/me 요청, 사용자의 정보를 얻어옴.

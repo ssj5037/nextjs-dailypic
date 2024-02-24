@@ -1,9 +1,9 @@
-import FollowingBar from '@/component/FollowingBar';
-import PostList from '@/component/PostList';
+import FollowingBar from '@/component/home/FollowingBar';
+import PostList from '@/component/home/PostList';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
-import SideBar from '@/component/SideBar';
+import SideBar from '@/component/home/SideBar';
 
 export default async function HomePage() {
   const session = await getServerSession(authOptions);

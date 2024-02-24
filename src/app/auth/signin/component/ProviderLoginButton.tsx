@@ -1,5 +1,5 @@
 'use client';
-import DPButton from '@/component/DPButton';
+import DPButton from '@/component/ui/DPButton';
 import { ClientSafeProvider, signIn } from 'next-auth/react';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';

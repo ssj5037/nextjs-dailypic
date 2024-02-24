@@ -1,9 +1,9 @@
 'use client';
 
 import { signIn, signOut } from 'next-auth/react';
-import { SignInIcon, SignOutIcon } from './ui/icons';
-import DPButton from './DPButton';
 import { User } from '@/models/user';
+import DPButton from '@/component/ui/DPButton';
+import { SignInIcon, SignOutIcon } from '@/component/ui/icons';
 
 type Props = {
   user: User;
