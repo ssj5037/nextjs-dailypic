@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className='flex flex-col md:flex-row'>
         <AuthContext>
           <Header />
-          <main className='flex justify-center grow my-7'>
+          <main className='flex justify-center grow py-3 overflow-auto'>
             <SWRConfigContext>{children}</SWRConfigContext>
           </main>
         </AuthContext>
