@@ -1,17 +1,20 @@
-import { Image } from 'sanity';
 import { SimpleUser } from './user';
 
 export type Comment = {
-  author: SimpleUser;
+  username: string;
+  image: string;
   comment: string;
 };
 
-export type Post = {
+export type Post = SimpleUser & {
   id: string;
-  author: SimpleUser;
-  image: Image;
+  comments: number;
+  likes: string[];
+  text: string;
   imageUrl: string;
-  like: SimpleUser[];
-  comments: Comment[];
   publishedAt: Date;
+};
+
+export type FullPost = Post & {
+  comments: Comment[];
 };
