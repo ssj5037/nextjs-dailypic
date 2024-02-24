@@ -1,12 +1,17 @@
 'use client';
-import { signIn, signOut, useSession } from 'next-auth/react';
+
+import { signIn, signOut } from 'next-auth/react';
 import { SignInIcon, SignOutIcon } from './ui/icons';
 import DPButton from './DPButton';
+import { User } from '@/models/user';
 
-export default function SignIn() {
-  const { data: session } = useSession();
+type Props = {
+  user: User;
+};
+
+export default function SignIn({ user }: Props) {
   const handleAuth = () => {
-    session ? signOut() : signIn();
+    user ? signOut() : signIn();
   };
   return (
     <>
@@ -14,7 +19,7 @@ export default function SignIn() {
         onClick={handleAuth}
         className='flex items-center justify-center w-full gap-2 p-2 font-semibold text-white transition-all bg-orange-400 rounded hover:bg-orange-300'
       >
-        {session ? (
+        {user ? (
           <>
             <span className='hidden text-sm xl:block'>Sign Out</span>
             <span className='text-xl'>

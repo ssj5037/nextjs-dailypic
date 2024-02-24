@@ -70,7 +70,7 @@ export default async function Header() {
             <span className='text-gray text-xs'>{user.name}</span>
           </div>
         </Link>
-        <SignInButton />
+        <SignInButton user={user} />
       </div>
     </header>
   );
