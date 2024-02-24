@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { SmileIcon } from '../ui/icons';
 
-export default function AddComment() {
+export default function CommentForm() {
   const [comment, setComment] = useState('');
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

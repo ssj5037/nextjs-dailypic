@@ -2,10 +2,10 @@
 
 import { DetailUser } from '@/models/user';
 import Link from 'next/link';
-import { SyncLoader } from 'react-spinners';
 import useSWR from 'swr';
 import ScrollableBar from '@/component/ui/ScrollableBar';
 import Avatar from '@/component/ui/Avatar';
+import SyncSpinner from '../ui/SyncSpinner';
 
 export default function FollowingBar() {
   // 1. 클라이언트 컴포넌트에서 백엔드에게 api/me 요청, 사용자의 정보를 얻어옴.
@@ -21,7 +21,7 @@ export default function FollowingBar() {
   return (
     <section className='w-full flex justify-center items-center p-4 mb-4 min-h-28 overflow-x-auto'>
       {loading ? (
-        <SyncLoader color='red' size={8} speedMultiplier={0.7} />
+        <SyncSpinner />
       ) : (
         (!users || users.length === 0) && <p>{`팔로잉하는 유저가 없습니다.`}</p>
       )}
