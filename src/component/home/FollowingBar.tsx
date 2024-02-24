@@ -15,15 +15,11 @@ export default function FollowingBar() {
   //    (image, username)
   const { data, isLoading: loading, error } = useSWR<DetailUser>('/api/me');
   // const users = data?.following;
-  const users = data?.following && [
-    ...data?.following,
-    ...data?.following,
-    ...data?.following,
-  ];
+  const users = data?.following;
   // const users = undefined;
 
   return (
-    <section className='w-full flex justify-center items-center p-4 shadow-md shadow-neutral-300 mb-4 rounded-lg min-h-28 overflow-x-auto'>
+    <section className='w-full flex justify-center items-center p-4 mb-4 min-h-28 overflow-x-auto'>
       {loading ? (
         <SyncLoader color='red' size={8} speedMultiplier={0.7} />
       ) : (

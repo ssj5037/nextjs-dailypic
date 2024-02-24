@@ -25,7 +25,8 @@
     "react-spinners": "^0.13.8",
     "sanity": "^3.29.0",
     "styled-components": "^6.1.8",
-    "swr": "^2.2.5"
+    "swr": "^2.2.5",
+    "timeago.js": "^4.0.2"
   },
   "devDependencies": {
     "@types/node": "^20",
