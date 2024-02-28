@@ -8,11 +8,11 @@ type Props = {
 export default function SideBar({ user: { image, username, name } }: Props) {
   return (
     <>
-      <Link href={`/${username}`} className='flex gap-3 shrink-0'>
+      <Link href={`/${username}`} className='flex gap-3 my-5 shrink-0'>
         <Avatar size='large' image={image} />
         <div className='flex flex-col'>
           <span className='font-semibold text-md'>{username}</span>
-          <span className='text-gray text-sm'>{name}</span>
+          <span className='text-sm text-gray'>{name}</span>
         </div>
       </Link>
       <div className='my-7'>

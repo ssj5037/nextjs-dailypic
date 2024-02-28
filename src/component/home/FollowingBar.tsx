@@ -19,7 +19,7 @@ export default function FollowingBar() {
   // const users = undefined;
 
   return (
-    <section className='w-full flex justify-center items-center p-4 mb-4 min-h-28 overflow-x-auto'>
+    <section className='z-0 flex items-center justify-center w-full p-4 mb-4 overflow-x-auto min-h-28'>
       {loading ? (
         <SyncSpinner />
       ) : (
@@ -34,7 +34,7 @@ export default function FollowingBar() {
               className='flex flex-col items-center w-20'
             >
               <Avatar size='large' image={image} highlight />
-              <p className='w-full text-center text-sm text-ellipsis overflow-hidden'>
+              <p className='w-full overflow-hidden text-sm text-center text-ellipsis'>
                 {username}
               </p>
             </Link>

@@ -2,7 +2,7 @@
 
 import { Post } from '@/models/post';
 import useSWR from 'swr';
-import HomePostCard from './HomePostCard';
+import PostCard from './PostCard';
 import SyncSpinner from '../ui/SyncSpinner';
 
 export default function PostList() {
@@ -12,7 +12,7 @@ export default function PostList() {
     error,
   } = useSWR<Post[]>('/api/posts');
   return (
-    <div className='flex justify-center items-center flex-col gap-5'>
+    <div className='flex flex-col items-center justify-center gap-5'>
       {loading ? (
         <SyncSpinner />
       ) : (
@@ -22,7 +22,7 @@ export default function PostList() {
       )}
 
       {posts?.map((post, index) => (
-        <HomePostCard key={post.id} post={post} priority={index < 2} />
+        <PostCard key={post.id} post={post} priority={index < 2} />
       ))}
     </div>
   );
