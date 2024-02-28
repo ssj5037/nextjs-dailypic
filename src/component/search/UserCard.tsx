@@ -1,9 +1,9 @@
-import { UserProfile } from '@/models/user';
+import { ProfileUser } from '@/models/user';
 import Avatar from '../ui/Avatar';
 import Link from 'next/link';
 
 type Props = {
-  user: UserProfile;
+  user: ProfileUser;
 };
 export default function UserCard({
   user: { username, name, image, following, followers },

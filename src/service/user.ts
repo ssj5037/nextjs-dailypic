@@ -1,4 +1,4 @@
-import { UserProfile } from '@/models/user';
+import { ProfileUser } from '@/models/user';
 import { client } from '../../sanity/lib/client';
 
 type OAuthUser = {
@@ -51,15 +51,37 @@ export async function getUsers(search: string) {
       `*[_type == "user" && (name match "*${search}*" || username match "*${search}*")]{
         ...,
         "id": _id,
+        "posts": count(*[_type == "post" && references(^._id)]),
         "following": count(following),
         "followers": count(followers)
       }`
     )
     .then((users) =>
-      users.map((user: UserProfile) => ({
+      users.map((user: ProfileUser) => ({
         ...user,
         following: user.following ?? 0,
         followers: user.followers ?? 0,
       }))
     );
+}
+
+export async function getUserProfile(username: string) {
+  return client
+    .fetch(
+      `*[_type == "user" && username == "${username}"]{
+        ...,
+        "id": _id,
+        "posts": count(*[_type == "post" && references(^._id)]),
+        "following": count(following),
+        "followers": count(followers)
+      }[0]`
+    )
+    .then((user: ProfileUser) => {
+      return {
+        ...user,
+        following: user.following ?? 0,
+        followers: user.followers ?? 0,
+        posts: user.posts ?? 0,
+      };
+    });
 }
