@@ -12,3 +12,4 @@ export { default as LikeFillIcon } from './LikeFillIcon';
 export { default as BookmarkIcon } from './BookmarkIcon';
 export { default as BookmarkFillIcon } from './BookmarkFillIcon';
 export { default as SmileIcon } from './SmileIcon';
+export { default as CloseIcon } from './CloseIcon';

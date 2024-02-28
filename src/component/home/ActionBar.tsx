@@ -3,7 +3,7 @@ import { BookmarkIcon, LikeIcon } from '../ui/icons';
 type Props = {
   likes: string[];
   username: string;
-  text: string;
+  text?: string;
 };
 
 export default function ActionBar({ likes, username, text }: Props) {
@@ -14,9 +14,11 @@ export default function ActionBar({ likes, username, text }: Props) {
         <BookmarkIcon />
       </p>
       <p className='font-semibold'>좋아요 {likes?.length || 0}개</p>
-      <p>
-        <span className='font-semibold'>{username}</span> {text}
-      </p>
+      {text && (
+        <p>
+          <span className='font-semibold'>{username}</span> {text}
+        </p>
+      )}
     </>
   );
 }

@@ -19,7 +19,7 @@ type Props = {
 
 export default function HomePostCard({ post, priority = false }: Props) {
   register('ko', koLocale);
-  const { imageUrl, likes, comments, username, image, text, publishedAt } =
+  const { id, imageUrl, likes, comments, username, image, text, publishedAt } =
     post;
 
   const [showModal, setShowModal] = useState(false);
@@ -27,7 +27,7 @@ export default function HomePostCard({ post, priority = false }: Props) {
   const handleClose = () => setShowModal(false);
 
   return (
-    <article className='flex flex-col gap-5 border-b pb-5 px-1'>
+    <article className='flex flex-col gap-5 px-1 pb-5 border-b'>
       <section className='flex items-center gap-2'>
         <Avatar image={image} highlight />
         <span>{username}</span>·
@@ -36,7 +36,7 @@ export default function HomePostCard({ post, priority = false }: Props) {
         </span>
       </section>
       <Image
-        className='aspect-square object-cover w-full'
+        className='object-cover w-full aspect-square'
         src={imageUrl}
         width={475}
         height={475}
@@ -57,7 +57,7 @@ export default function HomePostCard({ post, priority = false }: Props) {
       </section>
       {showModal &&
         createPortal(
-          <ModalPostCard post={post} onClose={handleClose} />,
+          <ModalPostCard id={id} onClose={handleClose} />,
           document.body
         )}
     </article>
