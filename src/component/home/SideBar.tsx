@@ -1,9 +1,9 @@
-import { User } from '@/models/user';
+import { AuthUser } from '@/models/user';
 import Link from 'next/link';
 import Avatar from '@/component/ui/Avatar';
 
 type Props = {
-  user: User;
+  user: AuthUser;
 };
 export default function SideBar({ user: { image, username, name } }: Props) {
   return (

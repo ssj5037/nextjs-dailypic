@@ -2,7 +2,7 @@
 
 import useSWR from 'swr';
 import UserCard from './UserCard';
-import { UserProfile } from '@/models/user';
+import { ProfileUser } from '@/models/user';
 import SyncSpinner from '../ui/SyncSpinner';
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function UserList({ search = '' }: Props) {
-  const { data: users, isLoading: loading } = useSWR<UserProfile[]>(
+  const { data: users, isLoading: loading } = useSWR<ProfileUser[]>(
     `/api/users?search=${search}`
   );
   return (
@@ -23,7 +23,7 @@ export default function UserList({ search = '' }: Props) {
         )
       )}
       {users &&
-        users.map((user: UserProfile) => (
+        users.map((user: ProfileUser) => (
           <UserCard user={user} key={user.id} />
         ))}
     </div>
