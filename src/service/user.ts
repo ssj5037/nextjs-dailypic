@@ -48,7 +48,7 @@ export async function getUser(id: string) {
 export async function getUsers(search: string) {
   return client
     .fetch(
-      `*[_type == "user" && (name match "*" + "${search}" + "*" || username match "*" + "${search}" + "*")]{
+      `*[_type == "user" && (name match "*${search}*" || username match "*${search}*")]{
         ...,
         "id": _id,
         "following": count(following),
