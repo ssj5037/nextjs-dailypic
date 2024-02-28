@@ -11,7 +11,7 @@ type Props = {
 
 export default function UserList({ search = '' }: Props) {
   const { data: users, isLoading: loading } = useSWR<UserProfile[]>(
-    '/api/users?search=' + search
+    `/api/users?search=${search}`
   );
   return (
     <div className='flex flex-col items-center gap-3'>

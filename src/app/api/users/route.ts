@@ -1,11 +1,16 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getUsers } from '@/service/user';
-const url = require('url');
-const querystring = require('querystring');
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]/route';
 
-export async function GET(req: Request) {
-  const parsedUrl = url.parse(req.url);
-  const query = querystring.parse(parsedUrl.query);
+export async function GET(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+  const user = session?.user;
 
-  return getUsers(query.search ?? '').then((data) => NextResponse.json(data));
+  if (!user) {
+    // 401 : unauthorized
+    return new Response('Authentication Error', { status: 401 });
+  }
+  const search = req.nextUrl.searchParams.get('search');
+  return getUsers(search ?? '').then((data) => NextResponse.json(data));
 }
