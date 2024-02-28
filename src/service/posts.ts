@@ -40,9 +40,7 @@ export async function getPost(id: string) {
       "likes": like[]->username,
       "text": comments[0].comment,
       "imageUrl": image
-    }`
+    }[0]`
     )
-    .then((posts) =>
-      posts.map((post: Post) => ({ ...post, imageUrl: urlFor(post.imageUrl) }))
-    );
+    .then((post) => ({ ...post, imageUrl: urlFor(post.imageUrl) }));
 }

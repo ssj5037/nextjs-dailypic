@@ -10,7 +10,9 @@ import koLocale from 'timeago.js/lib/lang/ko';
 import ActionBar from './ActionBar';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import ModalPostCard from './ModalPostCard';
+import ModalPostCard from './PostDetailModal';
+import PostUserAvater from '../ui/PostUserAvatar';
+import PostPublished from '../ui/PostPublished';
 
 type Props = {
   post: Post;
@@ -28,13 +30,13 @@ export default function HomePostCard({ post, priority = false }: Props) {
 
   return (
     <article className='flex flex-col gap-5 px-1 pb-5 border-b'>
-      <section className='flex items-center gap-2'>
-        <Avatar image={image} highlight />
-        <span>{username}</span>·
-        <span className='text-sm text-gray-500'>
-          {format(publishedAt, 'ko')}
-        </span>
-      </section>
+      <PostUserAvater
+        image={image}
+        username={username}
+        className='hidden md:flex'
+      >
+        · <PostPublished date={publishedAt} />
+      </PostUserAvater>
       <Image
         className='object-cover w-full aspect-square'
         src={imageUrl}
@@ -57,7 +59,7 @@ export default function HomePostCard({ post, priority = false }: Props) {
       </section>
       {showModal &&
         createPortal(
-          <ModalPostCard id={id} onClose={handleClose} />,
+          <ModalPostCard post={post} onClose={handleClose} />,
           document.body
         )}
     </article>
