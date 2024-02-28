@@ -46,3 +46,23 @@ export async function getPost(id: string) {
       posts.map((post: Post) => ({ ...post, imageUrl: urlFor(post.imageUrl) }))
     );
 }
+
+export async function getUserPosts(username: string) {
+  return client
+    .fetch(
+      `*[_type == "post" && author->username == "${username}"] | order(publishedAt desc)
+  {
+      ...,
+      "id": _id,
+      "username": author->username,
+      "image": author->image,
+      "comments": count(comments),
+      "likes": like[]->username,
+      "text": comments[0].comment,
+      "imageUrl": image
+    }`
+    )
+    .then((posts) =>
+      posts.map((post: Post) => ({ ...post, imageUrl: urlFor(post.imageUrl) }))
+    );
+}
