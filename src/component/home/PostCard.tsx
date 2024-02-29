@@ -25,11 +25,7 @@ export default function HomePostCard({ post, priority = false }: Props) {
 
   return (
     <article className='flex flex-col gap-5 px-1 pb-5 border-b max-w-[475px]'>
-      <PostUserAvater
-        image={image}
-        username={username}
-        className='hidden md:flex'
-      >
+      <PostUserAvater image={image} username={username} className='flex'>
         · <PostPublished date={publishedAt} />
       </PostUserAvater>
       <Image

@@ -59,7 +59,7 @@ export default function ModalPostCard({ post, onClose }: Props) {
             username={username}
             className='hidden p-4 md:flex'
           />
-          <section className='hidden p-4 overflow-auto border-t border-b grow md:block'>
+          <section className='flex-col hidden gap-5 p-4 overflow-auto border-t border-b grow md:flex'>
             {data?.comments &&
               data.comments.map(
                 ({ username: commentUser, image, comment }, index) => (
