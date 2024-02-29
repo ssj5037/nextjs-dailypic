@@ -1,7 +1,7 @@
 import FollowingBar from '@/component/home/FollowingBar';
 import PostList from '@/component/home/PostList';
 import { getServerSession } from 'next-auth';
-import { authOptions } from './api/auth/[...nextauth]/route';
+import { authOptions } from './api/auth/[...nextauth]/authOption';
 import { redirect } from 'next/navigation';
 import SideBar from '@/component/home/SideBar';
 

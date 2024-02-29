@@ -1,6 +1,6 @@
 import { getProviders } from 'next-auth/react';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOption';
 import ProviderLoginButton from './component/ProviderLoginButton';
 import { redirect } from 'next/navigation';
 import { Metadata } from 'next';

@@ -12,7 +12,7 @@ import {
   SearchIcon,
 } from '@/component/ui/icons';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOption';
 import { redirect } from 'next/navigation';
 
 const menus: NavMenu[] = [
@@ -65,9 +65,9 @@ export default async function Header() {
       <div className='flex flex-row justify-center gap-8 xl:w-full md:flex-col'>
         <Link href={`/${user.username}`} className='flex gap-2 shrink-0'>
           <Avatar highlight image={user.image} />
-          <div className='xl:flex flex-col hidden'>
-            <span className='font-semibold text-sm'>{user.username}</span>
-            <span className='text-gray text-xs'>{user.name}</span>
+          <div className='flex-col hidden xl:flex'>
+            <span className='text-sm font-semibold'>{user.username}</span>
+            <span className='text-xs text-gray'>{user.name}</span>
           </div>
         </Link>
         <SignInButton user={user} />
