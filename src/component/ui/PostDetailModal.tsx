@@ -2,13 +2,13 @@
 
 import { FullPost, Post } from '@/models/post';
 import Image from 'next/image';
-import Avatar from '../ui/Avatar';
-import CommentForm from './CommentForm';
+import Avatar from './Avatar';
+import CommentForm from '../home/CommentForm';
 import ActionBar from './ActionBar';
-import { CloseIcon } from '../ui/icons';
+import { CloseIcon } from './icons';
 import useSWR from 'swr';
-import PostUserAvater from '../ui/PostUserAvatar';
-import PostPublished from '../ui/PostPublished';
+import PostUserAvater from './PostUserAvatar';
+import PostPublished from './PostPublished';
 import Link from 'next/link';
 
 type Props = {
@@ -78,7 +78,7 @@ export default function ModalPostCard({ post, onClose }: Props) {
               )}
           </section>
           <section className='flex flex-col gap-1.5 px-4 pt-5'>
-            <ActionBar likes={likes} username={username} />
+            <ActionBar id={id} likes={likes} username={username} />
             <PostPublished date={publishedAt} />
           </section>
           <section className='hidden p-4 md:block'>

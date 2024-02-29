@@ -29,14 +29,14 @@ export const authOptions: NextAuthOptions = {
         session.user = {
           ...user,
           username: user.email?.split('@')[0] || '',
-          id: token.sub || '',
+          id: token.sub || '', // 유저 id를 넣은 jwt token에서 id 꺼내옴.
         };
       }
       return session;
     },
     async jwt({ user, token }) {
       if (user) {
-        token.uid = user.id;
+        token.uid = user.id; // jwt 토큰에 유저 id 넣음
       }
       return token;
     },

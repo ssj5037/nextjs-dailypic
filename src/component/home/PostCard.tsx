@@ -3,10 +3,10 @@
 import { Post } from '@/models/post';
 import Image from 'next/image';
 import CommentForm from './CommentForm';
-import ActionBar from './ActionBar';
+import ActionBar from '../ui/ActionBar';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import ModalPostCard from './PostDetailModal';
+import ModalPostCard from '../ui/PostDetailModal';
 import PostUserAvater from '../ui/PostUserAvatar';
 import PostPublished from '../ui/PostPublished';
 
@@ -38,7 +38,7 @@ export default function HomePostCard({ post, priority = false }: Props) {
         onClick={handleOpen}
       />
       <section className='flex flex-col gap-1.5'>
-        <ActionBar likes={likes} text={text} username={username} />
+        <ActionBar id={id} likes={likes} text={text} username={username} />
         {comments > 1 && (
           <button className='text-gray-500' onClick={handleOpen}>
             댓글 {comments - 1}개 모두 보기

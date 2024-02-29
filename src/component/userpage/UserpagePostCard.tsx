@@ -4,7 +4,7 @@ import { Post } from '@/models/post';
 import Image from 'next/image';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import ModalPostCard from '../home/PostDetailModal';
+import ModalPostCard from '../ui/PostDetailModal';
 
 type Props = {
   post: Post;

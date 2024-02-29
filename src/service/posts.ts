@@ -118,3 +118,23 @@ export async function getUserLikes(username: string): Promise<Post[]> {
       }));
     });
 }
+
+export async function setLike(postId: string, userId: string) {
+  return client
+    .patch(postId)
+    .setIfMissing({ likes: [] })
+    .append('likes', [
+      {
+        _ref: userId,
+        _type: 'reference',
+      },
+    ])
+    .commit({ autoGenerateArrayKeys: true });
+}
+
+export async function delLike(postId: string, userId: string) {
+  return client
+    .patch(postId)
+    .unset([`likes[_ref=="${userId}"]`])
+    .commit();
+}
