@@ -1,4 +1,4 @@
-import { Post } from '@/models/post';
+import { Post, UserpagePost } from '@/models/post';
 import { client, urlFor } from '../../sanity/lib/client';
 
 export async function getPosts(username: string) {
@@ -45,11 +45,11 @@ export async function getPost(id: string) {
     .then((post) => ({ ...post, imageUrl: urlFor(post.imageUrl) }));
 }
 
-export async function getUserPosts(username: string) {
+export async function getUserPosts(username: string): Promise<Post[]> {
   return client
     .fetch(
       `*[_type == "post" && author->username == "${username}"] | order(publishedAt desc)
-  {
+    {
       ...,
       "id": _id,
       "username": author->username,
@@ -60,7 +60,61 @@ export async function getUserPosts(username: string) {
       "imageUrl": image
     }`
     )
-    .then((posts) =>
-      posts.map((post: Post) => ({ ...post, imageUrl: urlFor(post.imageUrl) }))
-    );
+    .then((posts) => {
+      return posts.map((post: Post) => ({
+        ...post,
+        imageUrl: urlFor(post.imageUrl),
+        likes: post.likes ?? [],
+      }));
+    });
+}
+
+export async function getUserBookmarks(username: string): Promise<Post[]> {
+  return client
+    .fetch(
+      `*[_type == "user" && username == "${username}"][0]
+      {bookmarks[] | order(publishedAt desc)->{
+          ...,
+          "id": _id,
+          "username": author->username,
+          "image": author->image,
+          "comments": count(comments),
+          "likes": like[]->username,
+          "text": comments[0].comment,
+          "imageUrl": image
+      }}`
+    )
+    .then((posts) => {
+      if (!posts.bookmarks) return [];
+      return posts.bookmarks.map((post: Post) => ({
+        ...post,
+        imageUrl: urlFor(post.imageUrl),
+        likes: post.likes ?? [],
+      }));
+    });
+}
+
+export async function getUserLikes(username: string): Promise<Post[]> {
+  return client
+    .fetch(
+      `*[_type == "user" && username == "${username}"][0]
+      {likes[] | order(publishedAt desc)->{
+        ...,
+        "id": _id,
+        "username": author->username,
+        "image": author->image,
+        "comments": count(comments),
+        "likes": like[]->username,
+        "text": comments[0].comment,
+        "imageUrl": image
+      }}`
+    )
+    .then((posts) => {
+      if (!posts.likes) return [];
+      return posts.likes.map((post: Post) => ({
+        ...post,
+        imageUrl: urlFor(post.imageUrl),
+        likes: post.likes ?? [],
+      }));
+    });
 }

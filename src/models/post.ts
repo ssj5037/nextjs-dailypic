@@ -18,3 +18,8 @@ export type Post = SimpleUser & {
 export type FullPost = Post & {
   comments: Comment[];
 };
+
+export type UserpagePostType = 'posts' | 'likes' | 'bookmarks';
+export type UserpagePost = Omit<Post, 'likes' | 'text'> & {
+  likes: number;
+};

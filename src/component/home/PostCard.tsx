@@ -2,11 +2,7 @@
 
 import { Post } from '@/models/post';
 import Image from 'next/image';
-import Avatar from '../ui/Avatar';
 import CommentForm from './CommentForm';
-import { format } from 'timeago.js';
-import { register } from 'timeago.js';
-import koLocale from 'timeago.js/lib/lang/ko';
 import ActionBar from './ActionBar';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -20,7 +16,6 @@ type Props = {
 };
 
 export default function HomePostCard({ post, priority = false }: Props) {
-  register('ko', koLocale);
   const { id, imageUrl, likes, comments, username, image, text, publishedAt } =
     post;
 
@@ -29,7 +24,7 @@ export default function HomePostCard({ post, priority = false }: Props) {
   const handleClose = () => setShowModal(false);
 
   return (
-    <article className='flex flex-col gap-5 px-1 pb-5 border-b'>
+    <article className='flex flex-col gap-5 px-1 pb-5 border-b max-w-[475px]'>
       <PostUserAvater
         image={image}
         username={username}
@@ -38,7 +33,7 @@ export default function HomePostCard({ post, priority = false }: Props) {
         · <PostPublished date={publishedAt} />
       </PostUserAvater>
       <Image
-        className='object-cover w-full aspect-square'
+        className='object-cover aspect-square'
         src={imageUrl}
         width={475}
         height={475}

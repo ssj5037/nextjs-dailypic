@@ -9,6 +9,7 @@ import { CloseIcon } from '../ui/icons';
 import useSWR from 'swr';
 import PostUserAvater from '../ui/PostUserAvatar';
 import PostPublished from '../ui/PostPublished';
+import Link from 'next/link';
 
 type Props = {
   post: Post;
@@ -21,7 +22,7 @@ export default function ModalPostCard({ post, onClose }: Props) {
 
   return (
     <div
-      className='fixed z-10 flex items-center justify-center w-screen h-screen bg-black/50'
+      className='fixed z-40 flex items-center justify-center w-screen h-screen bg-black/50'
       onClick={(event) => {
         if (event.target === event.currentTarget) {
           onClose();
@@ -30,13 +31,13 @@ export default function ModalPostCard({ post, onClose }: Props) {
     >
       <button
         type='button'
-        className='fixed z-20 text-3xl text-white top-5 right-8'
+        className='fixed z-50 text-3xl text-white top-5 right-8'
         onClick={onClose}
       >
         <CloseIcon />
       </button>
 
-      <div className='z-20 flex flex-col justify-center w-4/5 m-10 overflow-hidden rounded-md h-3/4 md:flex-row'>
+      <div className='flex flex-col justify-center w-4/5 m-10 overflow-hidden rounded-md z-500 h-3/4 md:flex-row'>
         <PostUserAvater
           image={image}
           username={username}
@@ -62,11 +63,15 @@ export default function ModalPostCard({ post, onClose }: Props) {
             {data?.comments &&
               data.comments.map(
                 ({ username: commentUser, image, comment }, index) => (
-                  <div key={index} className='flex items-center gap-3'>
-                    <Avatar image={image} />
-                    <p className='flex gap-2 text-sm'>
+                  <div key={index} className='flex gap-3'>
+                    <Link href={`/${commentUser}`} className='shrink'>
+                      <Avatar image={image} />
+                    </Link>
+                    <p className='flex flex-col gap-2 text-sm'>
                       <span className='font-semibold'>{commentUser}</span>
-                      <span>{comment}</span>
+                      <span className='break-all whitespace-normal'>
+                        {comment}
+                      </span>
                     </p>
                   </div>
                 )

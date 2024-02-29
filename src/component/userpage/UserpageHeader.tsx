@@ -9,7 +9,7 @@ export default async function UserpageHeader({
   user: { image, name, username, followers, following, posts },
 }: Props) {
   return (
-    <div className='flex items-center justify-center w-full gap-16 px-5 py-10 border-b'>
+    <div className='flex items-center justify-center w-full gap-16 px-5 py-10'>
       <div className=''>
         <Avatar image={image} highlight size='xLarge' />
       </div>

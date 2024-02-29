@@ -15,7 +15,7 @@ export default function ActionBar({ likes, username, text }: Props) {
       </p>
       <p className='font-semibold'>좋아요 {likes?.length || 0}개</p>
       {text && (
-        <p>
+        <p className='break-all whitespace-normal'>
           <span className='font-semibold'>{username}</span> {text}
         </p>
       )}

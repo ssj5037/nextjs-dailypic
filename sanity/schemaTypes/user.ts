@@ -61,6 +61,18 @@ export default defineType({
       ],
       validation: (rule) => rule.unique(),
     }),
+    defineField({
+      name: 'likes',
+      title: 'Likes',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: { type: 'post' },
+        },
+      ],
+      validation: (rule) => rule.unique(),
+    }),
   ],
   preview: {
     select: {
