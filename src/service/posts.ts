@@ -97,8 +97,8 @@ export async function getUserBookmarks(username: string): Promise<Post[]> {
 export async function getUserLikes(username: string): Promise<Post[]> {
   return client
     .fetch(
-      `*[_type == "user" && username == "${username}"][0]
-      {likes[] | order(publishedAt desc)->{
+      `*[_type == "post" && "${username}" in likes[]-> username]
+      | order(publishedAt desc){
         ...,
         "id": _id,
         "username": author->username,
@@ -107,7 +107,7 @@ export async function getUserLikes(username: string): Promise<Post[]> {
         "likes": like[]->username,
         "text": comments[0].comment,
         "imageUrl": image
-      }}`
+      }`
     )
     .then((posts) => {
       if (!posts.likes) return [];
