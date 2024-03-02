@@ -6,7 +6,7 @@ import DPButton from '@/component/ui/DPButton';
 import { SignInIcon, SignOutIcon } from '@/component/ui/icons';
 
 type Props = {
-  user: AuthUser;
+  user: AuthUser | undefined;
 };
 
 export default function SignIn({ user }: Props) {

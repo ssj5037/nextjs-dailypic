@@ -13,7 +13,6 @@ import {
 } from '@/component/ui/icons';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOption';
-import { redirect } from 'next/navigation';
 
 const menus: NavMenu[] = [
   {
@@ -40,10 +39,6 @@ export default async function Header() {
   const session = await getServerSession(authOptions);
   const user = session?.user;
 
-  if (!user) {
-    redirect('/auth/signin');
-  }
-
   return (
     <header className='flex flex-row items-center w-full gap-8 px-4 py-3 border-b md:flex-col md:w-20 xl:w-60 md:py-10 md:border-r md:border-b-0 md:items-start'>
       {/* logo */}
@@ -63,13 +58,15 @@ export default async function Header() {
       </nav>
       {/* user info */}
       <div className='flex flex-row justify-center gap-8 xl:w-full md:flex-col'>
-        <Link href={`/${user.username}`} className='flex gap-2 shrink-0'>
-          <Avatar highlight image={user.image} />
-          <div className='flex-col hidden xl:flex'>
-            <span className='text-sm font-semibold'>{user.username}</span>
-            <span className='text-xs text-gray'>{user.name}</span>
-          </div>
-        </Link>
+        {user && (
+          <Link href={`/${user.username}`} className='flex gap-2 shrink-0'>
+            <Avatar highlight image={user.image} />
+            <div className='flex-col hidden xl:flex'>
+              <span className='text-sm font-semibold'>{user.username}</span>
+              <span className='text-xs text-gray'>{user.name}</span>
+            </div>
+          </Link>
+        )}
         <SignInButton user={user} />
       </div>
     </header>
