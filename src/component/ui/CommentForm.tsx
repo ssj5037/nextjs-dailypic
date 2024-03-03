@@ -1,13 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { SmileIcon } from '../ui/icons';
+import { SmileIcon } from './icons';
+import usePosts from '@/hooks/usePost';
+import { Post } from '@/models/post';
 
-export default function CommentForm() {
+export default function CommentForm({ post }: { post: Post }) {
   const [comment, setComment] = useState('');
+  const { addComment } = usePosts();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(comment);
+    addComment(post, comment);
+    setComment('');
   };
 
   return (

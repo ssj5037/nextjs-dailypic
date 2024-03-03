@@ -26,6 +26,5 @@ export default function useUser() {
       rollbackOnError: true,
     });
   }
-  console.log(user);
   return { user, isLoading, error, setBookmark };
 }

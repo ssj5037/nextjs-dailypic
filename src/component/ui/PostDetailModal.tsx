@@ -3,7 +3,7 @@
 import { FullPost, Post } from '@/models/post';
 import Image from 'next/image';
 import Avatar from './Avatar';
-import CommentForm from '../home/CommentForm';
+import CommentForm from './CommentForm';
 import ActionBar from './ActionBar';
 import { CloseIcon } from './icons';
 import useSWR from 'swr';
@@ -82,7 +82,7 @@ export default function ModalPostCard({ post, onClose }: Props) {
             <PostPublished date={publishedAt} />
           </section>
           <section className='hidden p-4 md:block'>
-            <CommentForm />
+            <CommentForm post={post} />
           </section>
         </article>
       </div>

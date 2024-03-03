@@ -2,7 +2,7 @@
 
 import { Post } from '@/models/post';
 import Image from 'next/image';
-import CommentForm from './CommentForm';
+import CommentForm from '../ui/CommentForm';
 import ActionBar from '../ui/ActionBar';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -39,13 +39,13 @@ export default function HomePostCard({ post, priority = false }: Props) {
       <section className='flex flex-col gap-1.5'>
         <ActionBar post={post} />
         {comments > 1 && (
-          <button className='text-gray-500' onClick={handleOpen}>
+          <button className='text-gray-500 text-left' onClick={handleOpen}>
             댓글 {comments - 1}개 모두 보기
           </button>
         )}
       </section>
       <section>
-        <CommentForm />
+        <CommentForm post={post} />
       </section>
       {showModal &&
         createPortal(

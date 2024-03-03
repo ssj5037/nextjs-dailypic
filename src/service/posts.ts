@@ -141,3 +141,22 @@ export async function delLike(postId: string, userId: string) {
     .unset([`like[_ref=="${userId}"]`])
     .commit();
 }
+
+export async function addComment(
+  postId: string,
+  userId: string,
+  comment: string
+) {
+  return client
+    .patch(postId)
+    .append('comments', [
+      {
+        author: {
+          _ref: userId,
+          _type: 'reference',
+        },
+        comment,
+      },
+    ])
+    .commit({ autoGenerateArrayKeys: true });
+}
