@@ -93,18 +93,18 @@ export async function getUserBookmarks(username: string): Promise<Post[]> {
           "likes": like[]->username,
           "text": comments[0].comment,
           "imageUrl": image
-      }}`
+      }}.bookmarks`
     )
-    .then((posts) => {
-      if (!posts.bookmarks) return [];
-      return posts.bookmarks.map(modifiedPostData);
+    .then((bookmarks) => {
+      if (!bookmarks) return [];
+      return bookmarks.map(modifiedPostData);
     });
 }
 
 export async function getUserLikes(username: string): Promise<Post[]> {
   return client
     .fetch(
-      `*[_type == "post" && "${username}" in likes[]-> username]
+      `*[_type == "post" && "${username}" in like[]-> username]
       | order(publishedAt desc){
         ...,
         "id": _id,
@@ -116,9 +116,9 @@ export async function getUserLikes(username: string): Promise<Post[]> {
         "imageUrl": image
       }`
     )
-    .then((posts) => {
-      if (!posts.likes) return [];
-      return posts.likes.map(modifiedPostData);
+    .then((likes) => {
+      if (!likes) return [];
+      return likes.map(modifiedPostData);
     });
 }
 
