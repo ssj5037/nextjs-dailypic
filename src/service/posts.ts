@@ -1,7 +1,24 @@
-import { Post, UserpagePost } from '@/models/post';
+import { FullPost, Post, UserpagePost } from '@/models/post';
 import { client, urlFor } from '../../sanity/lib/client';
 
-export async function getPosts(username: string) {
+function modifiedPostData(post: Post): Post {
+  return {
+    ...post,
+    imageUrl: urlFor(post.imageUrl),
+    likes: post.likes ?? [],
+  };
+}
+
+function modifiedFullPostData(post: FullPost): FullPost {
+  return {
+    ...post,
+    imageUrl: urlFor(post.imageUrl),
+    likes: post.likes ?? [],
+    comments: post.comments ?? [],
+  };
+}
+
+export async function getPosts(username: string): Promise<Post[]> {
   return client
     .fetch(
       `*[_type == "post" && author->username == "${username}"
@@ -18,12 +35,10 @@ export async function getPosts(username: string) {
       "imageUrl": image
     }`
     )
-    .then((posts) =>
-      posts.map((post: Post) => ({ ...post, imageUrl: urlFor(post.imageUrl) }))
-    );
+    .then((posts) => posts.map(modifiedPostData));
 }
 
-export async function getPost(id: string) {
+export async function getPost(id: string): Promise<FullPost> {
   return client
     .fetch(
       `*[_type == "post" && _id == "${id}"]
@@ -42,7 +57,7 @@ export async function getPost(id: string) {
       "imageUrl": image
     }[0]`
     )
-    .then((post) => ({ ...post, imageUrl: urlFor(post.imageUrl) }));
+    .then(modifiedFullPostData);
 }
 
 export async function getUserPosts(username: string): Promise<Post[]> {
@@ -61,11 +76,7 @@ export async function getUserPosts(username: string): Promise<Post[]> {
     }`
     )
     .then((posts) => {
-      return posts.map((post: Post) => ({
-        ...post,
-        imageUrl: urlFor(post.imageUrl),
-        likes: post.likes ?? [],
-      }));
+      return posts.map(modifiedPostData);
     });
 }
 
@@ -86,11 +97,7 @@ export async function getUserBookmarks(username: string): Promise<Post[]> {
     )
     .then((posts) => {
       if (!posts.bookmarks) return [];
-      return posts.bookmarks.map((post: Post) => ({
-        ...post,
-        imageUrl: urlFor(post.imageUrl),
-        likes: post.likes ?? [],
-      }));
+      return posts.bookmarks.map(modifiedPostData);
     });
 }
 
@@ -111,19 +118,15 @@ export async function getUserLikes(username: string): Promise<Post[]> {
     )
     .then((posts) => {
       if (!posts.likes) return [];
-      return posts.likes.map((post: Post) => ({
-        ...post,
-        imageUrl: urlFor(post.imageUrl),
-        likes: post.likes ?? [],
-      }));
+      return posts.likes.map(modifiedPostData);
     });
 }
 
 export async function setLike(postId: string, userId: string) {
   return client
     .patch(postId)
-    .setIfMissing({ likes: [] })
-    .append('likes', [
+    .setIfMissing({ like: [] })
+    .append('like', [
       {
         _ref: userId,
         _type: 'reference',
@@ -135,6 +138,6 @@ export async function setLike(postId: string, userId: string) {
 export async function delLike(postId: string, userId: string) {
   return client
     .patch(postId)
-    .unset([`likes[_ref=="${userId}"]`])
+    .unset([`like[_ref=="${userId}"]`])
     .commit();
 }

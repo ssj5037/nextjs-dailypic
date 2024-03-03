@@ -17,7 +17,7 @@ type Props = {
 };
 
 export default function ModalPostCard({ post, onClose }: Props) {
-  const { id, imageUrl, likes, username, image, text, publishedAt } = post;
+  const { id, imageUrl, username, image, text, publishedAt } = post;
   const { data } = useSWR<FullPost>('/api/posts/' + id);
 
   return (
@@ -78,7 +78,7 @@ export default function ModalPostCard({ post, onClose }: Props) {
               )}
           </section>
           <section className='flex flex-col gap-1.5 px-4 pt-5'>
-            <ActionBar id={id} likes={likes} username={username} />
+            <ActionBar post={post} />
             <PostPublished date={publishedAt} />
           </section>
           <section className='hidden p-4 md:block'>

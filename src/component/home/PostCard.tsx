@@ -16,8 +16,7 @@ type Props = {
 };
 
 export default function HomePostCard({ post, priority = false }: Props) {
-  const { id, imageUrl, likes, comments, username, image, text, publishedAt } =
-    post;
+  const { imageUrl, comments, username, image, text, publishedAt } = post;
 
   const [showModal, setShowModal] = useState(false);
   const handleOpen = () => setShowModal(true);
@@ -38,7 +37,7 @@ export default function HomePostCard({ post, priority = false }: Props) {
         onClick={handleOpen}
       />
       <section className='flex flex-col gap-1.5'>
-        <ActionBar id={id} likes={likes} text={text} username={username} />
+        <ActionBar post={post} />
         {comments > 1 && (
           <button className='text-gray-500' onClick={handleOpen}>
             댓글 {comments - 1}개 모두 보기

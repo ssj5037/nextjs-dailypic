@@ -1,16 +1,11 @@
 'use client';
 
-import { Post } from '@/models/post';
-import useSWR from 'swr';
 import PostCard from './PostCard';
 import SyncSpinner from '../ui/SyncSpinner';
+import usePosts from '@/hooks/usePost';
 
 export default function PostList() {
-  const {
-    data: posts,
-    isLoading: loading,
-    error,
-  } = useSWR<Post[]>('/api/posts');
+  const { posts, isLoading: loading, error } = usePosts();
   return (
     <div className='flex flex-col items-center justify-center gap-5'>
       {loading ? (

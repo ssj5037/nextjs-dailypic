@@ -10,11 +10,13 @@ export const metadata: Metadata = {
   description: 'DailyPic에 로그인/회원가입 하세요.',
 };
 
+type Props = {
+  searchParams: { callbackUrl: string };
+};
+
 export default async function SignInPage({
   searchParams: { callbackUrl },
-}: {
-  searchParams: { callbackUrl: string };
-}) {
+}: Props) {
   const session = await getServerSession(authOptions);
 
   if (session) {
