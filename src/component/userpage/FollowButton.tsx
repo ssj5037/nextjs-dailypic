@@ -1,20 +1,20 @@
 'use client';
 
-import { HomeUser, ProfileUser, SimpleUser } from '@/models/user';
+import { SimpleUser } from '@/models/user';
 import DPButton from '../ui/DPButton';
-import useSWR from 'swr';
+import useUser from '@/hooks/useUser';
 
 type Props = {
   username: string;
 };
 
 export default function FollowButton({ username }: Props) {
-  const { data: loggedUser } = useSWR<HomeUser>('/api/me');
+  const { user } = useUser();
 
-  const isShow = loggedUser && loggedUser.username !== username;
+  const isShow = user && user.username !== username;
   const isFollowing =
-    loggedUser &&
-    loggedUser.following.find(
+    user &&
+    user.following.find(
       (followingUser: SimpleUser) => followingUser.username === username
     );
 

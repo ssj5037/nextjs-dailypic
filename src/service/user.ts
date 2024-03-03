@@ -85,3 +85,23 @@ export async function getUserProfile(username: string) {
       };
     });
 }
+
+export async function setBookmark(postId: string, userId: string) {
+  return client
+    .patch(userId)
+    .setIfMissing({ bookmarks: [] })
+    .append('bookmarks', [
+      {
+        _ref: postId,
+        _type: 'reference',
+      },
+    ])
+    .commit({ autoGenerateArrayKeys: true });
+}
+
+export async function delBookmark(postId: string, userId: string) {
+  return client
+    .patch(userId)
+    .unset([`bookmarks[_ref=="${postId}"]`])
+    .commit();
+}

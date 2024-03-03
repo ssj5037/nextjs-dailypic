@@ -1,11 +1,9 @@
 'use client';
-
-import { HomeUser } from '@/models/user';
 import Link from 'next/link';
-import useSWR from 'swr';
 import ScrollableBar from '@/component/ui/ScrollableBar';
 import Avatar from '@/component/ui/Avatar';
 import SyncSpinner from '../ui/SyncSpinner';
+import useUser from '@/hooks/useUser';
 
 export default function FollowingBar() {
   // 1. 클라이언트 컴포넌트에서 백엔드에게 api/me 요청, 사용자의 정보를 얻어옴.
@@ -13,9 +11,9 @@ export default function FollowingBar() {
   // 3. 백엔드에서 사용자의 상세 정보를 Sanity에서 가지고 옴.
   // 4. 여기에서, 클라이언트 컴포넌트에서 floowings의 정보를 UI에 보여줌
   //    (image, username)
-  const { data, isLoading: loading, error } = useSWR<HomeUser>('/api/me');
+  const { user, isLoading: loading, error } = useUser();
   // const users = data?.following;
-  const users = data?.following;
+  const users = user?.following;
   // const users = undefined;
 
   return (
