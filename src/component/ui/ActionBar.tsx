@@ -22,14 +22,10 @@ export default function ActionBar({ post }: Props) {
   const bookmarked = user ? user.bookmarks.includes(id) : false;
 
   const handleLike = (like: boolean) => {
-    if (user) {
-      setLike(post, user.username, like);
-    }
+    user && setLike(post, user.username, like);
   };
   const handleBookmark = (bookmark: boolean) => {
-    if (user) {
-      setBookmark(user, id, bookmark);
-    }
+    user && setBookmark(id, bookmark);
   };
   return (
     <>

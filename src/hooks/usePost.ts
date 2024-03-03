@@ -32,6 +32,7 @@ export default function usePosts() {
     };
     const newPosts = posts?.map((p) => (p.id === post.id ? newPost : p));
 
+    // https://swr.vercel.app/ko/docs/mutation#api
     return mutate(updateLike(post.id, like), {
       optimisticData: newPosts,
       populateCache: false,

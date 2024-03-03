@@ -11,7 +11,9 @@ async function updateBookmark(id: string, bookmark: boolean) {
 export default function useUser() {
   const { data: user, isLoading, error, mutate } = useSWR<HomeUser>('api/me');
 
-  function setBookmark(user: HomeUser, postId: string, bookmark: boolean) {
+  function setBookmark(postId: string, bookmark: boolean) {
+    if (!user) return;
+
     const newUser = {
       ...user,
       bookmarks: bookmark
