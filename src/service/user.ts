@@ -106,38 +106,37 @@ export async function delBookmark(postId: string, userId: string) {
     .commit();
 }
 
+// https://www.sanity.io/docs/js-client#multiple-mutations-in-a-transaction
 export async function setFollowing(userId: string, followingUserId: string) {
   return client
-    .patch(userId)
-    .append('following', [
-      {
-        _ref: followingUserId,
-        _type: 'reference',
-      },
-    ])
-    .commit({ autoGenerateArrayKeys: true })
-    .then(() =>
-      client
-        .patch(followingUserId)
-        .append('followers', [
-          {
-            _ref: userId,
-            _type: 'reference',
-          },
-        ])
-        .commit({ autoGenerateArrayKeys: true })
-    );
+    .transaction()
+    .patch(userId, (user) =>
+      user.append('following', [
+        {
+          _ref: followingUserId,
+          _type: 'reference',
+        },
+      ])
+    )
+    .patch(followingUserId, (user) =>
+      user.append('followers', [
+        {
+          _ref: userId,
+          _type: 'reference',
+        },
+      ])
+    )
+    .commit({ autoGenerateArrayKeys: true });
 }
 
 export async function setUnFollowing(userId: string, followingUserId: string) {
   return client
-    .patch(userId)
-    .unset([`following[_ref=="${followingUserId}"]`])
-    .commit()
-    .then(() =>
-      client
-        .patch(followingUserId)
-        .unset([`followers[_ref=="${userId}"]`])
-        .commit()
-    );
+    .transaction()
+    .patch(userId, (user) =>
+      user.unset([`following[_ref=="${followingUserId}"]`])
+    )
+    .patch(followingUserId, (user) =>
+      user.unset([`followers[_ref=="${userId}"]`])
+    )
+    .commit();
 }

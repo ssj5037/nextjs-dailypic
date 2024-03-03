@@ -5,9 +5,8 @@ import FollowButton from './FollowButton';
 type Props = {
   user: ProfileUser;
 };
-export default async function UserpageHeader({
-  user: { image, name, username, followers, following, posts },
-}: Props) {
+export default async function UserpageHeader({ user }: Props) {
+  const { image, name, username, followers, following, posts } = user;
   return (
     <div className='flex items-center justify-center w-full gap-16 px-5 py-10'>
       <div className=''>
@@ -16,7 +15,7 @@ export default async function UserpageHeader({
       <div className='flex flex-col gap-5'>
         <div className='flex items-center gap-5 basis-1/3'>
           <span className='text-2xl'>{username}</span>
-          <FollowButton username={username} />
+          <FollowButton user={user} />
         </div>
         <div className='flex gap-10 basis-2/3'>
           <p>

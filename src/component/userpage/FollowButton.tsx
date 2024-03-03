@@ -1,15 +1,15 @@
 'use client';
 
-import { SimpleUser } from '@/models/user';
+import { ProfileUser, SimpleUser } from '@/models/user';
 import DPButton from '../ui/DPButton';
 import useUser from '@/hooks/useUser';
 
 type Props = {
-  username: string;
+  user: ProfileUser;
 };
 
-export default function FollowButton({ username }: Props) {
-  const { user } = useUser();
+export default function FollowButton({ user: { username, id } }: Props) {
+  const { user, toggleFollow } = useUser();
 
   const isShow = user && user.username !== username;
   const isFollowing =
@@ -17,16 +17,16 @@ export default function FollowButton({ username }: Props) {
     user.following.find(
       (followingUser: SimpleUser) => followingUser.username === username
     );
-
-  const toggleClick = () => {};
+  console.log(user);
+  const handleFollow = () => {
+    user && toggleFollow(id, !isFollowing);
+  };
 
   return (
     <>
-      {isShow && !isFollowing ? (
-        <DPButton onClick={toggleClick}>Follow</DPButton>
-      ) : (
-        <DPButton onClick={toggleClick} color='danger'>
-          Unfollow
+      {isShow && (
+        <DPButton onClick={handleFollow} color={isFollowing && 'danger'}>
+          {isFollowing ? 'Unfollow' : 'Follow'}
         </DPButton>
       )}
     </>
