@@ -2,16 +2,17 @@
 
 import { useState } from 'react';
 import { SmileIcon } from './icons';
-import usePosts from '@/hooks/usePost';
-import { Post } from '@/models/post';
 
-export default function CommentForm({ post }: { post: Post }) {
+type Props = {
+  onComment: (comment: string) => void;
+};
+
+export default function CommentForm({ onComment }: Props) {
   const [comment, setComment] = useState('');
-  const { addComment } = usePosts();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!comment.trim().length) return;
-    addComment(post, comment);
+    onComment(comment);
     setComment('');
   };
 
@@ -26,11 +27,9 @@ export default function CommentForm({ post }: { post: Post }) {
         value={comment}
         onChange={(e) => setComment(e.target.value)}
         placeholder='댓글 달기...'
+        required
       />
-      <button
-        className='disabled:opacity-50 disabled:bg-gray-100'
-        disabled={comment.length === 0}
-      >
+      <button className='disabled:opacity-50 ' disabled={comment.length === 0}>
         등록
       </button>
     </form>

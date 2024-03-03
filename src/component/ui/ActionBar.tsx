@@ -6,7 +6,7 @@ import {
 } from './icons';
 import ToggleButton from './ToggleButton';
 import { Post } from '@/models/post';
-import usePosts from '@/hooks/usePost';
+import usePosts from '@/hooks/usePosts';
 import useUser from '@/hooks/useUser';
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 };
 
 export default function ActionBar({ post }: Props) {
-  const { id, likes, username, text } = post;
+  const { id, likes } = post;
   const { setLike } = usePosts();
   const { user, setBookmark } = useUser();
 
@@ -44,11 +44,6 @@ export default function ActionBar({ post }: Props) {
         />
       </p>
       <p className='font-semibold'>좋아요 {likes?.length || 0}개</p>
-      {text && (
-        <p className='break-all whitespace-normal'>
-          <span className='font-semibold'>{username}</span> {text}
-        </p>
-      )}
     </>
   );
 }

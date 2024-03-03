@@ -9,6 +9,7 @@ import { createPortal } from 'react-dom';
 import ModalPostCard from '../ui/PostDetailModal';
 import PostUserAvater from '../ui/PostUserAvatar';
 import PostPublished from '../ui/PostPublished';
+import usePosts from '@/hooks/usePosts';
 
 type Props = {
   post: Post;
@@ -21,7 +22,11 @@ export default function HomePostCard({ post, priority = false }: Props) {
   const [showModal, setShowModal] = useState(false);
   const handleOpen = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
+  const { addComment } = usePosts();
 
+  const handleComment = (comment: string) => {
+    addComment(post, comment);
+  };
   return (
     <article className='flex flex-col gap-5 px-1 pb-5 border-b max-w-[475px]'>
       <PostUserAvater image={image} username={username} className='flex'>
@@ -38,6 +43,9 @@ export default function HomePostCard({ post, priority = false }: Props) {
       />
       <section className='flex flex-col gap-1.5'>
         <ActionBar post={post} />
+        <p className='break-all whitespace-normal'>
+          <span className='font-semibold'>{username}</span> {text}
+        </p>
         {comments > 1 && (
           <button className='text-gray-500 text-left' onClick={handleOpen}>
             댓글 {comments - 1}개 모두 보기
@@ -45,7 +53,7 @@ export default function HomePostCard({ post, priority = false }: Props) {
         )}
       </section>
       <section>
-        <CommentForm post={post} />
+        <CommentForm onComment={handleComment} />
       </section>
       {showModal &&
         createPortal(

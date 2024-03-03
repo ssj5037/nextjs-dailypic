@@ -1,59 +1,34 @@
-import { Post } from '@/models/post';
-import useSWR from 'swr';
-
-async function updateLike(id: string, like: boolean) {
-  return fetch('api/posts/like', {
-    method: 'PUT',
-    body: JSON.stringify({ id, like }),
-  }).then((res) => res.json());
-}
+import { Comment, FullPost } from '@/models/post';
+import useSWR, { useSWRConfig } from 'swr';
 
 async function createComment(id: string, comment: string) {
   return fetch('api/posts/comment', {
-    method: 'PUT',
+    method: 'POST',
     body: JSON.stringify({ id, comment }),
   }).then((res) => res.json());
 }
 
-export default function usePosts() {
+export default function useFullPost(postId: string) {
   const {
-    data: posts,
+    data: post,
     isLoading,
     error,
     mutate,
-  } = useSWR<Post[]>('/api/posts');
+  } = useSWR<FullPost>(`/api/posts/${postId}`);
+  const { mutate: globalMutate } = useSWRConfig();
 
-  const setLike = (post: Post, username: string, like: boolean) => {
-    const newPost = {
+  const addComment = (comment: Comment) => {
+    if (!post) return;
+    const newPost: FullPost = {
       ...post,
-      likes: like
-        ? [...post.likes, username]
-        : post.likes.filter((item) => item !== username),
+      comments: [...post.comments, comment],
     };
-    const newPosts = posts?.map((p) => (p.id === post.id ? newPost : p));
-
-    // https://swr.vercel.app/ko/docs/mutation#api
-    return mutate(updateLike(post.id, like), {
-      optimisticData: newPosts,
+    return mutate(createComment(post.id, comment.comment), {
+      optimisticData: newPost,
       populateCache: false,
       revalidate: false,
       rollbackOnError: true,
-    });
+    }).then(() => globalMutate('api/posts'));
   };
-
-  const addComment = (post: Post, comment: string) => {
-    const newPost: Post = {
-      ...post,
-      comments: post.comments + 1,
-    };
-    const newPosts = posts?.map((p) => (p.id === post.id ? newPost : p));
-
-    return mutate(createComment(post.id, comment), {
-      optimisticData: newPosts,
-      populateCache: false,
-      revalidate: false,
-      rollbackOnError: true,
-    });
-  };
-  return { posts, isLoading, error, setLike, addComment };
+  return { post, isLoading, error, addComment };
 }

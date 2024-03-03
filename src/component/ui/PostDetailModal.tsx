@@ -1,15 +1,16 @@
 'use client';
 
-import { FullPost, Post } from '@/models/post';
+import { Post } from '@/models/post';
 import Image from 'next/image';
 import Avatar from './Avatar';
 import CommentForm from './CommentForm';
 import ActionBar from './ActionBar';
 import { CloseIcon } from './icons';
-import useSWR from 'swr';
 import PostUserAvater from './PostUserAvatar';
 import PostPublished from './PostPublished';
 import Link from 'next/link';
+import useFullPost from '@/hooks/usePost';
+import useUser from '@/hooks/useUser';
 
 type Props = {
   post: Post;
@@ -18,7 +19,12 @@ type Props = {
 
 export default function ModalPostCard({ post, onClose }: Props) {
   const { id, imageUrl, username, image, text, publishedAt } = post;
-  const { data } = useSWR<FullPost>('/api/posts/' + id);
+  const { user } = useUser();
+  const { post: data, addComment } = useFullPost(id);
+
+  const handleComment = (comment: string) => {
+    user && addComment({ comment, username: user.username, image: user.image });
+  };
 
   return (
     <div
@@ -82,7 +88,7 @@ export default function ModalPostCard({ post, onClose }: Props) {
             <PostPublished date={publishedAt} />
           </section>
           <section className='hidden p-4 md:block'>
-            <CommentForm post={post} />
+            <CommentForm onComment={handleComment} />
           </section>
         </article>
       </div>

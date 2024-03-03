@@ -3,11 +3,11 @@ type Size = 'small' | 'large' | 'xLarge';
 export default function Avatar({
   highlight = false,
   size = 'small',
-  image,
+  image = 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fvectors%2Fblank-profile-picture-mystery-man-973460%2F&psig=AOvVaw2541ojSCeQBTkI8zNTBlDq&ust=1709552796369000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPiJjs2C2IQDFQAAAAAdAAAAABAE',
 }: {
   highlight?: boolean;
   size?: Size;
-  image: string;
+  image?: string;
 }) {
   return (
     <div

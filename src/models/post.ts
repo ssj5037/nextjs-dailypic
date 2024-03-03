@@ -2,7 +2,7 @@ import { SimpleUser } from './user';
 
 export type Comment = {
   username: string;
-  image: string;
+  image?: string | undefined;
   comment: string;
 };
 
@@ -15,7 +15,7 @@ export type Post = SimpleUser & {
   publishedAt: Date;
 };
 
-export type FullPost = Post & {
+export type FullPost = Omit<Post, 'comments'> & {
   comments: Comment[];
 };
 

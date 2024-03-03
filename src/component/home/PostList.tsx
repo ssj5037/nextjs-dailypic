@@ -2,7 +2,7 @@
 
 import PostCard from './PostCard';
 import SyncSpinner from '../ui/SyncSpinner';
-import usePosts from '@/hooks/usePost';
+import usePosts from '@/hooks/usePosts';
 
 export default function PostList() {
   const { posts, isLoading: loading, error } = usePosts();
