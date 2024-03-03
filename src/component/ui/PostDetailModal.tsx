@@ -11,6 +11,7 @@ import PostPublished from './PostPublished';
 import Link from 'next/link';
 import useFullPost from '@/hooks/usePost';
 import useUser from '@/hooks/useUser';
+import SyncSpinner from './SyncSpinner';
 
 type Props = {
   post: Post;
@@ -20,7 +21,7 @@ type Props = {
 export default function ModalPostCard({ post, onClose }: Props) {
   const { id, imageUrl, username, image, text, publishedAt } = post;
   const { user } = useUser();
-  const { post: data, addComment } = useFullPost(id);
+  const { post: data, isLoading, addComment } = useFullPost(id);
 
   const handleComment = (comment: string) => {
     user && addComment({ comment, username: user.username, image: user.image });
@@ -66,6 +67,11 @@ export default function ModalPostCard({ post, onClose }: Props) {
             className='hidden p-4 md:flex'
           />
           <section className='flex-col hidden gap-5 p-4 overflow-auto border-t border-b grow md:flex'>
+            {isLoading && (
+              <div className='flex justify-center my-10'>
+                <SyncSpinner />
+              </div>
+            )}
             {data?.comments &&
               data.comments.map(
                 ({ username: commentUser, image, comment }, index) => (
