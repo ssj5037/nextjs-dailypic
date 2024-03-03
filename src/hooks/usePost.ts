@@ -1,4 +1,5 @@
 import { Comment, FullPost } from '@/models/post';
+import { useCallback } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
 async function createComment(id: string, comment: string) {
@@ -17,18 +18,22 @@ export default function useFullPost(postId: string) {
   } = useSWR<FullPost>(`/api/posts/${postId}`);
   const { mutate: globalMutate } = useSWRConfig();
 
-  const addComment = (comment: Comment) => {
-    if (!post) return;
-    const newPost: FullPost = {
-      ...post,
-      comments: [...post.comments, comment],
-    };
-    return mutate(createComment(post.id, comment.comment), {
-      optimisticData: newPost,
-      populateCache: false,
-      revalidate: false,
-      rollbackOnError: true,
-    }).then(() => globalMutate('api/posts'));
-  };
+  const addComment = useCallback(
+    (comment: Comment) => {
+      if (!post) return;
+      const newPost: FullPost = {
+        ...post,
+        comments: [...post.comments, comment],
+      };
+      return mutate(createComment(post.id, comment.comment), {
+        optimisticData: newPost,
+        populateCache: false,
+        revalidate: false,
+        rollbackOnError: true,
+      }).then(() => globalMutate('api/posts'));
+    },
+    [post, mutate, globalMutate]
+  );
+
   return { post, isLoading, error, addComment };
 }
