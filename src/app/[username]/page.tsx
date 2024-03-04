@@ -1,5 +1,5 @@
 import UserpageHeader from '@/component/userpage/UserpageHeader';
-import UserpagePostGrid from '@/component/userpage/UserpagePostGrid';
+import UserpagePosts from '@/component/userpage/UserpagePosts';
 import { ProfileUser } from '@/models/user';
 import { getUserProfile } from '@/service/user';
 import { notFound, redirect } from 'next/navigation';
@@ -23,7 +23,7 @@ export default async function UserpageLayout({ params: { username } }: Props) {
   return (
     <div className='w-full max-w-5xl md:p-2'>
       <UserpageHeader user={user} />
-      <UserpagePostGrid username={username} />
+      <UserpagePosts username={username} />
     </div>
   );
 }

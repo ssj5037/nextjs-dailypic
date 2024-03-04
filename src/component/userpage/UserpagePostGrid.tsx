@@ -1,25 +1,13 @@
-'use client';
-
-import { Post, UserpagePostType } from '@/models/post';
+import { Post } from '@/models/post';
 import UserpagePostCard from './UserpagePostCard';
-import UserpageMenu from './UserpageMenu';
-import { useState } from 'react';
-import useSWR from 'swr';
 import SyncSpinner from '../ui/SyncSpinner';
+import usePosts from '@/hooks/usePosts';
 
-type Props = {
-  username: string;
-};
-
-export default function UserpagePostGrid({ username }: Props) {
-  const [type, setType] = useState<UserpagePostType>('posts');
-  const { data: posts, isLoading: loading } = useSWR<Post[]>(
-    `/api/users/${username}/${type}`
-  );
+export default function UserpagePostGrid() {
+  const { posts, isLoading: loading } = usePosts();
 
   return (
     <>
-      <UserpageMenu type={type} setType={setType} />
       {loading ? (
         <div className='flex items-center justify-center m-10'>
           <SyncSpinner />
