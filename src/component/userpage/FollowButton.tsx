@@ -3,6 +3,9 @@
 import { ProfileUser, SimpleUser } from '@/models/user';
 import DPButton from '../ui/DPButton';
 import useUser from '@/hooks/useUser';
+import { useRouter } from 'next/navigation';
+import { useState, useTransition } from 'react';
+import { PulseLoader } from 'react-spinners';
 
 type Props = {
   user: ProfileUser;
@@ -11,23 +14,44 @@ type Props = {
 export default function FollowButton({ user: { username, id } }: Props) {
   const { user, toggleFollow } = useUser();
 
+  // 관련 링크 : https://nextjs.org/docs/app/building-your-application/caching
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [isFetching, setIsFetching] = useState(false);
+  const isUpdating = isPending || isFetching;
+
   const isShow = user && user.username !== username;
   const isFollowing =
     user &&
     user.following.find(
       (followingUser: SimpleUser) => followingUser.username === username
     );
-  console.log(user);
-  const handleFollow = () => {
-    user && toggleFollow(id, !isFollowing);
+  const handleFollow = async () => {
+    setIsFetching(true);
+    user && (await toggleFollow(id, !isFollowing));
+    setIsFetching(false);
+    startTransition(() => {
+      router.refresh();
+    });
   };
 
   return (
     <>
       {isShow && (
-        <DPButton onClick={handleFollow} color={isFollowing && 'danger'}>
-          {isFollowing ? 'Unfollow' : 'Follow'}
-        </DPButton>
+        <div className='relative'>
+          {isUpdating && (
+            <div className='absolute inset-0 flex justify-center items-center'>
+              <PulseLoader size={6} />
+            </div>
+          )}
+          <DPButton
+            onClick={handleFollow}
+            color={isFollowing && 'danger'}
+            disabled={isUpdating}
+          >
+            {isFollowing ? 'Unfollow' : 'Follow'}
+          </DPButton>
+        </div>
       )}
     </>
   );

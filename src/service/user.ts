@@ -74,7 +74,9 @@ export async function getUserProfile(username: string) {
         "posts": count(*[_type == "post" && author->username == "${username}"]),
         "following": count(following),
         "followers": count(followers)
-      }[0]`
+      }[0]`,
+      undefined,
+      { cache: 'no-store' }
     )
     .then((user: ProfileUser) => {
       return {
@@ -111,7 +113,7 @@ export async function setFollowing(userId: string, followingUserId: string) {
   return client
     .transaction()
     .patch(userId, (user) =>
-      user.append('following', [
+      user.setIfMissing({ following: [] }).append('following', [
         {
           _ref: followingUserId,
           _type: 'reference',
@@ -119,7 +121,7 @@ export async function setFollowing(userId: string, followingUserId: string) {
       ])
     )
     .patch(followingUserId, (user) =>
-      user.append('followers', [
+      user.setIfMissing({ followers: [] }).append('followers', [
         {
           _ref: userId,
           _type: 'reference',

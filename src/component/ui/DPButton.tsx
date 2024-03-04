@@ -27,9 +27,9 @@ export default function DPButton({
 function ColorCss(color: Color): string {
   switch (color) {
     case 'danger':
-      return 'bg-red-400 hover:bg-red-300';
+      return 'bg-red-400 hover:bg-red-300 disabled:hover:bg-red-400';
     case 'primary':
     default:
-      return 'bg-orange-500 hover:bg-orange-300';
+      return 'bg-orange-500 hover:bg-orange-300 disabled:hover:bg-orange-500';
   }
 }
