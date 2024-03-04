@@ -1,25 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../../auth/[...nextauth]/authOption';
 import { delLike, setLike } from '@/service/posts';
+import { checkSessionUser } from '@/util/session';
 
 export async function PUT(req: NextRequest) {
-  const session = await getServerSession(authOptions);
-  const user = session?.user;
+  return checkSessionUser(async (user) => {
+    const { id, like } = await req.json();
 
-  if (!user) {
-    // 401 : unauthorized
-    return new Response('Authentication Error', { status: 401 });
-  }
-  const { id, like } = await req.json();
+    if (!id || like === undefined) {
+      return new Response('Bad Request', { status: 400 });
+    }
 
-  if (!id || like === undefined) {
-    return new Response('Bad Request', { status: 400 });
-  }
+    const request = like ? setLike : delLike;
 
-  const request = like ? setLike : delLike;
-
-  return request(id, user.id)
-    .then((data) => NextResponse.json(data))
-    .catch((error) => new Response(JSON.stringify(error), { status: 500 }));
+    return request(id, user.id)
+      .then((data) => NextResponse.json(data))
+      .catch((error) => new Response(JSON.stringify(error), { status: 500 }));
+  });
 }
