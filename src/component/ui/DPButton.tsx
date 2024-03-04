@@ -1,13 +1,15 @@
 type Color = 'primary' | 'danger';
 
 export default function DPButton({
+  type = 'button',
   onClick,
   className,
   color = 'primary',
   children,
   disabled = false,
 }: {
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  type?: 'button' | 'submit' | 'reset' | undefined;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   className?: string;
   color?: Color;
   children?: React.ReactNode;
@@ -15,6 +17,7 @@ export default function DPButton({
 }) {
   return (
     <button
+      type={type}
       onClick={onClick}
       disabled={disabled}
       className={`flex justify-center gap-2 p-2 font-semibold text-white transition-all rounded disabled:opacity-50 ${ColorCss(color)} ${className}`}

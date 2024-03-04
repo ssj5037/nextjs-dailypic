@@ -1,4 +1,4 @@
-import { FullPost, Post, UserpagePost } from '@/models/post';
+import { FullPost, Post } from '@/models/post';
 import { client, urlFor } from '../../sanity/lib/client';
 
 function modifiedPostData(post: Post): Post {
@@ -33,7 +33,9 @@ export async function getPosts(username: string): Promise<Post[]> {
       "likes": like[]->username,
       "text": comments[0].comment,
       "imageUrl": image
-    }`
+    }`,
+      undefined,
+      { cache: 'no-store' }
     )
     .then((posts) => posts.map(modifiedPostData));
 }
@@ -73,9 +75,12 @@ export async function getUserPosts(username: string): Promise<Post[]> {
       "likes": like[]->username,
       "text": comments[0].comment,
       "imageUrl": image
-    }`
+    }`,
+      undefined,
+      { cache: 'no-store' }
     )
     .then((posts) => {
+      if (!posts) return [];
       return posts.map(modifiedPostData);
     });
 }
@@ -84,7 +89,7 @@ export async function getUserBookmarks(username: string): Promise<Post[]> {
   return client
     .fetch(
       `*[_type == "user" && username == "${username}"][0]
-      {bookmarks[] | order(publishedAt desc)->{
+      {bookmarks[]->{
           ...,
           "id": _id,
           "username": author->username,
@@ -93,7 +98,9 @@ export async function getUserBookmarks(username: string): Promise<Post[]> {
           "likes": like[]->username,
           "text": comments[0].comment,
           "imageUrl": image
-      }}.bookmarks`
+      } | order(publishedAt desc)}.bookmarks`,
+      undefined,
+      { cache: 'no-store' }
     )
     .then((bookmarks) => {
       if (!bookmarks) return [];
@@ -114,7 +121,9 @@ export async function getUserLikes(username: string): Promise<Post[]> {
         "likes": like[]->username,
         "text": comments[0].comment,
         "imageUrl": image
-      }`
+      }`,
+      undefined,
+      { cache: 'no-store' }
     )
     .then((likes) => {
       if (!likes) return [];
@@ -160,4 +169,37 @@ export async function addComment(
       },
     ])
     .commit({ autoGenerateArrayKeys: true });
+}
+
+export async function addNewPost(file: Blob, text: string, userId: string) {
+  return client.assets.upload('image', file).then((imageAsset) => {
+    return client.create(
+      {
+        _type: 'post',
+        author: {
+          _ref: userId,
+          _type: 'reference',
+        },
+        image: {
+          _type: 'image',
+          asset: {
+            _type: 'reference',
+            _ref: imageAsset._id,
+          },
+        },
+        like: [],
+        comments: [
+          {
+            author: {
+              _ref: userId,
+              _type: 'reference',
+            },
+            comment: text,
+          },
+        ],
+        publishedAt: new Date(),
+      },
+      { autoGenerateArrayKeys: true }
+    );
+  });
 }
