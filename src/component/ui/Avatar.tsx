@@ -1,4 +1,4 @@
-type Size = 'small' | 'large' | 'xLarge';
+type Size = 'small' | 'large' | 'xLarge' | 'xxLarge';
 
 export default function Avatar({
   highlight = false,
@@ -30,8 +30,10 @@ export default function Avatar({
 
 function SizeCss(size: Size): string {
   switch (size) {
-    case 'xLarge':
+    case 'xxLarge':
       return 'w-40 h-40';
+    case 'xLarge':
+      return 'w-20 h-20';
     case 'large':
       return 'w-14 h-14';
     case 'small':

@@ -8,12 +8,15 @@ type Props = {
 export default async function UserpageHeader({ user }: Props) {
   const { image, name, username, followers, following, posts } = user;
   return (
-    <div className='flex items-center justify-center w-full gap-16 px-5 py-10'>
-      <div className=''>
+    <div className='flex flex-col items-center justify-center w-full gap-5 p-5 md:py-10 md:gap-16 md:flex-row'>
+      <div className='hidden md:block'>
+        <Avatar image={image} highlight size='xxLarge' />
+      </div>
+      <div className='block md:hidden'>
         <Avatar image={image} highlight size='xLarge' />
       </div>
-      <div className='flex flex-col gap-5'>
-        <div className='flex items-center gap-5 basis-1/3'>
+      <div className='flex flex-col items-center gap-5 md:items-start'>
+        <div className='flex items-center justify-center gap-5 md:justify-start basis-1/3'>
           <span className='text-2xl'>{username}</span>
           <FollowButton user={user} />
         </div>

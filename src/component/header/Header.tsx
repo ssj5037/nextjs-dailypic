@@ -40,7 +40,7 @@ export default async function Header() {
   const user = session?.user;
 
   return (
-    <header className='flex flex-row items-center w-full gap-8 px-4 py-3 border-b md:flex-col md:w-20 xl:w-60 md:py-10 md:border-r md:border-b-0 md:items-start'>
+    <header className='flex flex-row items-center w-full gap-3 px-4 py-3 border-b md:gap-8 md:flex-col md:w-20 xl:w-60 md:py-10 md:border-r md:border-b-0 md:items-start'>
       {/* logo */}
       <h1 className='p-2 font-semibold md:w-full md:h-10'>
         <Link href={'/'} className='hidden text-2xl xl:block'>
@@ -51,13 +51,13 @@ export default async function Header() {
         </Link>
       </h1>
       {/* nav */}
-      <nav className='flex flex-row items-start justify-end gap-5 md:w-full md:justify-start grow md:flex-col'>
+      <nav className='flex flex-row items-start justify-end gap-3 md:gap-5 md:w-full md:justify-start grow md:flex-col'>
         {menus.map((menu) => (
           <NavLink key={menu.path} menu={menu} />
         ))}
       </nav>
       {/* user info */}
-      <div className='flex flex-row justify-center gap-8 xl:w-full md:flex-col'>
+      <div className='flex flex-row justify-center gap-3 md:gap-8 xl:w-full md:flex-col'>
         {user && (
           <Link href={`/${user.username}`} className='flex gap-2 shrink-0'>
             <Avatar highlight image={user.image} />
