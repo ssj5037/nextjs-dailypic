@@ -16,6 +16,7 @@ export default function SignIn({ user }: Props) {
   return (
     <>
       <DPButton
+        title={user ? '로그아웃' : '로그인'}
         onClick={handleAuth}
         className='flex items-center justify-center w-full gap-2 p-2 font-semibold text-white transition-all bg-orange-400 rounded hover:bg-orange-300'
       >

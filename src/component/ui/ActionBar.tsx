@@ -31,12 +31,14 @@ export default function ActionBar({ post }: Props) {
     <>
       <p className='flex justify-between text-2xl'>
         <ToggleButton
+          title={liked ? '좋아요 취소' : '좋아요'}
           toggled={liked}
           onToggled={handleLike}
           fillIcon={<LikeFillIcon />}
           icon={<LikeIcon />}
         />
         <ToggleButton
+          title={bookmarked ? '북마크 취소' : '북마크'}
           toggled={bookmarked}
           onToggled={handleBookmark}
           fillIcon={<BookmarkFillIcon />}

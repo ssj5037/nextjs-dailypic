@@ -13,8 +13,15 @@ export default function ProviderLoginButton({
 }) {
   return (
     <DPButton
+      title={
+        provider.id === 'github'
+          ? '깃허브 소셜 로그인'
+          : provider.id === 'google'
+            ? '구글 소셜 로그인'
+            : '기타 소셜 로그인'
+      }
       onClick={() => signIn(provider.id, { callbackUrl })}
-      className='px-4 flex items-center gap-3'
+      className='flex items-center gap-3 px-4'
     >
       {provider.id === 'github' && <FaGithub className='text-xl' />}
       {provider.id === 'google' && <FcGoogle className='text-xl' />}

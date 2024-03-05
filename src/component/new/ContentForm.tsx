@@ -120,7 +120,7 @@ export default function ContentForm() {
           rows={10}
           required
         />
-        <DPButton className='w-full' type='submit'>
+        <DPButton title='게시물 등록' className='w-full' type='submit'>
           게시물 등록
         </DPButton>
       </form>

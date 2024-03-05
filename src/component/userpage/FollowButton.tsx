@@ -40,11 +40,12 @@ export default function FollowButton({ user: { username, id } }: Props) {
       {isShow && (
         <div className='relative'>
           {isUpdating && (
-            <div className='absolute inset-0 flex justify-center items-center'>
+            <div className='absolute inset-0 flex items-center justify-center'>
               <PulseLoader size={6} />
             </div>
           )}
           <DPButton
+            title={isFollowing ? '언팔로우' : '팔로우'}
             onClick={handleFollow}
             color={isFollowing && 'danger'}
             disabled={isUpdating}
