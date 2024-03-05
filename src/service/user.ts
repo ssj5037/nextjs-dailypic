@@ -16,21 +16,17 @@ export async function createUser({
   name,
   image,
 }: OAuthUser) {
-  return await client
-    .createIfNotExists({
-      _id: id,
-      _type: 'user',
-      username,
-      email,
-      name,
-      image,
-      following: [],
-      followers: [],
-      bookmarks: [],
-    })
-    .then((res) => {
-      console.log('Bike was created (or was already present)');
-    });
+  return await client.createIfNotExists({
+    _id: id,
+    _type: 'user',
+    username,
+    email,
+    name,
+    image,
+    following: [],
+    followers: [],
+    bookmarks: [],
+  });
 }
 
 export async function getUser(id: string) {
